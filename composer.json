@@ -2,16 +2,17 @@
     "name": "joesama/vuegrid",
     "description": "Simple Vue Datagrid",
     "type": "library",
-    "require": {
-        "laracasts/utilities": "^3.0"
-    },
     "license": "MIT",
     "authors": [
         {
-            "name": "Joesama",
-            "email": "joharijumali@gmail.com"
+            "name": "Ahmed Johari Jumali",
+            "email": "joharijumali@gmail.com",
+            "homepage": "https://bitbucket.org/joesama"
         }
     ],
+    "require": {
+        "laracasts/utilities": "^3.0"
+    },
     "autoload": {
 
         "psr-4": {
