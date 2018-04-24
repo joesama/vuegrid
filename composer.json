@@ -1,0 +1,38 @@
+{
+    "name": "joesama/vuegrid",
+    "description": "Simple Vue Datagrid",
+    "type": "library",
+    "require": {
+        "laracasts/utilities": "^3.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joesama",
+            "email": "joharijumali@gmail.com"
+        }
+    ],
+    "autoload": {
+
+        "psr-4": {
+            "Joesama\\VueGrid\\": "src/"
+        }, 
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laracasts\\Utilities\\JavaScript\\JavaScriptServiceProvider"
+            ],
+            "aliases": {
+                "JavaScript": "Laracasts\\Utilities\\JavaScript\\JavaScriptFacade"
+            }
+        }
+    },
+    "minimum-stability": "dev"
+}
