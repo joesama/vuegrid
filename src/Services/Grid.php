@@ -3,7 +3,7 @@ namespace Joesama\VueGrid\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
-use Threef\Entree\Services\DataGrid\Traits\DataModeller;
+use Joesama\VueGrid\Traits\DataModeller;
 use JavaScript;
 
 /**
@@ -180,12 +180,12 @@ class Grid
 	 **/
 	public function build()
 	{
+		// @TODO IF Sources Is Collection / Builder Build Pagination
+		// if(!is_null($this->items)):
+		// 	$items = $this->buildPaginators($this->items);
+		// endif;
 
-		if(!is_null($this->items)):
-			$items = $this->buildPaginators($this->items);
-		endif;
-
-		JavaScript::put([
+		$data = [
 			'swalert' => [
 				'confirm' => [
 					'title' => trans('joesama/vuegrid::datagrid.delete.confirm.title'),
@@ -206,21 +206,17 @@ class Grid
 	        'actions' => $this->actions,
 	        'simple' => $this->simple,
 	        'rowCss' => $this->styleRow,
-	       	'data' => (!is_null($this->items)) ? $items->items() : [],
-	        'pagination' => [
-	            'total' => (!is_null($this->items)) ? $items->total() : 0,
-	            'per_page' => (!is_null($this->items)) ? $items->perPage() : 20,
-	            'current_page' => (!is_null($this->items)) ? $items->currentPage() : 1,
-	            'last_page' => (!is_null($this->items)) ? $items->lastPage() : 1,
-	            'from' => (!is_null($this->items)) ? $items->firstItem() : 1,
-	            'to' => (!is_null($this->items)) ? $items->lastItem() : 1
-	        ]
-	    ]);
+	       	'data' => $this->items->items(),
+	        'data_total' => $this->items->total(),
+	        'data_per_page' => $this->items->perPage(),
+	        'data_current_page' => $this->items->currentPage(),
+	        'data_last_page' => $this->items->lastPage(),
+	        'data_from' => $this->items->firstItem(),
+	        'data_to' => $this->items->lastItem()
+	    ];
 
 
-
-
-	    return view('joesama/vuegrid::datagrid');
+	    return view('joesama/vuegrid::datagrid',compact('data'));
 	}
 
 
