@@ -1,224 +1,216 @@
-<?php 
+<?php
+
 namespace Joesama\VueGrid\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Joesama\VueGrid\Traits\DataModeller;
-use JavaScript;
 
 /**
- * Services to generate datagrid using vue.js
+ * Services to generate datagrid using vue.js.
  *
- * @package joesama/vuegrid
  * @author joharijumali@gmail.com
  **/
-class Grid 
+class Grid
 {
-	use DataModeller;
+    use DataModeller;
 
     /**
-     * Columns To Be Previews
+     * Columns To Be Previews.
      */
     protected $columns;
 
     /**
-     * Query Builder To Be Generate
+     * Query Builder To Be Generate.
      */
     protected $builder;
 
     /**
-     * Paginate Items
+     * Paginate Items.
      */
-    protected $items = NULL;
+    protected $items = null;
 
     /**
-     * Data API Path URL
+     * Data API Path URL.
      */
     protected $api;
 
     /**
-     * Add Button
+     * Add Button.
      */
-    protected $add = NULL;
-    protected $addDesc = NULL;
+    protected $add = null;
+    protected $addDesc = null;
 
     /**
-     * Actions Button
+     * Actions Button.
      */
-    protected $actions = FALSE;
-    protected $simple = FALSE;
+    protected $actions = false;
+    protected $simple = false;
 
     /**
-     * Search Display
+     * Search Display.
      */
-    protected $search = TRUE;
+    protected $search = true;
 
     /**
-     * Data Filtering
+     * Data Filtering.
      */
-    protected $autoFilter = FALSE;
-
+    protected $autoFilter = false;
 
     /**
-     * Paginate Numbers
+     * Paginate Numbers.
      */
     public $paginate = 20;
 
     /**
-     * Style Row
+     * Style Row.
      */
     public $styleRow;
 
+    /**
+     * Generate Columns For Table.
+     *
+     * @param array $columns
+     *
+     **/
+    public function setColumns(array $columns)
+    {
+        $this->columns = $columns;
+    }
 
-	/**
-	 * Generate Columns For Table
-	 *
-	 * @param array $columns
-	 *
-	 **/
-	public function setColumns(Array $columns)
-	{
-		$this->columns = $columns;
-	}
+    /**
+     * Generate Data Model.
+     *
+     * @param Illuminate\Database\Eloquent\Builder $model
+     * @param array                                $columns
+     *
+     **/
+    public function setModel($model, $columns = [])
+    {
+        $this->columns = (empty($columns)) ? $this->columns : $columns;
 
+        $this->items = $model;
+    }
 
-	/**
-	 * Generate Data Model
-	 *
-	 * @param Illuminate\Database\Eloquent\Builder $model
-	 * @param array $columns
-	 * 
-	 **/
-	public function setModel($model, $columns = [])
-	{
-		$this->columns = (empty($columns)) ? $this->columns  : $columns;
+    /**
+     * URI for Data API.
+     *
+     * @param string $url
+     **/
+    public function apiUrl($url)
+    {
+        $this->api = $url;
+    }
 
-		$this->items = $model;
+    /**
+     * Edit action.
+     *
+     * @param array $actions
+     **/
+    public function action($actions, $simple = false)
+    {
+        $this->actions = $actions;
+        $this->simple = $simple;
+    }
 
+    /**
+     * TODO : checboxes.
+     *
+     * @return void
+     *
+     * @author
+     **/
+    public function checkboxes()
+    {
+    }
 
-	}
+    /**
+     * Display Search Function.
+     *
+     * @return void
+     *
+     * @author
+     **/
+    public function showSearch($okay = true)
+    {
+        $this->search = $okay;
+    }
 
-	/**
-	 * URI for Data API
-	 *
-	 * @param string $url
-	 **/
-	public function apiUrl($url)
-	{
-		$this->api = $url;
-	}
+    /**
+     * Auto Filter Function.
+     *
+     * @return void
+     *
+     * @author
+     **/
+    public function autoFilter($okay = true)
+    {
+        $this->autoFilter = $okay;
+    }
 
-	/**
-	 * Edit action
-	 *
-	 * @param array $actions
-	 **/
-	public function action($actions, $simple = FALSE)
-	{
-		$this->actions = $actions;
-		$this->simple = $simple;
-	}
+    /**
+     * Add action.
+     *
+     * @param string $url
+     **/
+    public function add($url, $urlDesc = null)
+    {
+        $this->add = $url;
+        $this->addDesc = $urlDesc;
+    }
 
-	/**
-	 * TODO : checboxes
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function checkboxes()
-	{
-	}
+    /**
+     * Define Row Style Configuration.
+     *
+     * @param string $style, $field = NULL, $definer = NULL
+     *
+     **/
+    public function rowStyler($style, $field = null, $definer = null)
+    {
+        $this->styleRow = collect(['style' => $style, 'field' => $field, 'definer' => $definer]);
+    }
 
-	/**
-	 * Display Search Function
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function showSearch($okay = TRUE)
-	{
-		$this->search = $okay;
-	}
+    /**
+     * Build And Generate Data grid Table.
+     *
+     * @return void
+     **/
+    public function build()
+    {
+        // @TODO IF Sources Is Collection / Builder Build Pagination
+        // if(!is_null($this->items)):
+        // 	$items = $this->buildPaginators($this->items);
+        // endif;
 
-	/**
-	 * Auto Filter Function
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function autoFilter($okay = TRUE)
-	{
-		$this->autoFilter = $okay;
-	}
+        $data = [
+            'swalert' => [
+                'confirm' => [
+                    'title'   => trans('joesama/vuegrid::datagrid.delete.confirm.title'),
+                    'text'    => trans('joesama/vuegrid::datagrid.delete.confirm.text'),
+                    'proceed' => trans('joesama/vuegrid::datagrid.delete.confirm.proceed'),
+                ],
+                'cancel' => [
+                    'title' => trans('joesama/vuegrid::datagrid.delete.cancel.title'),
+                    'text'  => trans('joesama/vuegrid::datagrid.delete.cancel.text'),
+                ],
+            ],
+            'autoFilter'        => $this->autoFilter,
+            'search'            => $this->search,
+            'column'            => $this->columns,
+            'api'               => $this->api,
+            'add'               => $this->add,
+            'addDesc'           => $this->addDesc,
+            'actions'           => $this->actions,
+            'simple'            => $this->simple,
+            'rowCss'            => $this->styleRow,
+               'data'           => $this->items->items(),
+            'data_total'        => $this->items->total(),
+            'data_per_page'     => $this->items->perPage(),
+            'data_current_page' => $this->items->currentPage(),
+            'data_last_page'    => $this->items->lastPage(),
+            'data_from'         => $this->items->firstItem(),
+            'data_to'           => $this->items->lastItem(),
+        ];
 
-	/**
-	 * Add action
-	 *
-	 * @param string $url
-	 **/
-	public function add($url,$urlDesc = NULL)
-	{
-		$this->add = $url;
-		$this->addDesc = $urlDesc;
-	}
-
-	/**
-	 * Define Row Style Configuration
-	 *
-	 * @param string  $style, $field = NULL, $definer = NULL
-	 *
-	 **/
-	public function rowStyler($style, $field = NULL, $definer = NULL)
-	{
-		$this->styleRow = collect([ 'style' => $style,'field' => $field,'definer' => $definer ]);
-	}
-
-	/**
-	 * Build And Generate Data grid Table
-	 *
-	 * @return void
-	 **/
-	public function build()
-	{
-		// @TODO IF Sources Is Collection / Builder Build Pagination
-		// if(!is_null($this->items)):
-		// 	$items = $this->buildPaginators($this->items);
-		// endif;
-
-		$data = [
-			'swalert' => [
-				'confirm' => [
-					'title' => trans('joesama/vuegrid::datagrid.delete.confirm.title'),
-					'text' => trans('joesama/vuegrid::datagrid.delete.confirm.text'),
-					'proceed' => trans('joesama/vuegrid::datagrid.delete.confirm.proceed')
-				],
-				'cancel' => [
-					'title' => trans('joesama/vuegrid::datagrid.delete.cancel.title'),
-					'text' => trans('joesama/vuegrid::datagrid.delete.cancel.text')
-				]
-			],
-			'autoFilter' => $this->autoFilter,
-			'search' => $this->search,
-	        'column' => $this->columns,
-	        'api' => $this->api,
-	        'add' => $this->add,
-	        'addDesc' => $this->addDesc,
-	        'actions' => $this->actions,
-	        'simple' => $this->simple,
-	        'rowCss' => $this->styleRow,
-	       	'data' => $this->items->items(),
-	        'data_total' => $this->items->total(),
-	        'data_per_page' => $this->items->perPage(),
-	        'data_current_page' => $this->items->currentPage(),
-	        'data_last_page' => $this->items->lastPage(),
-	        'data_from' => $this->items->firstItem(),
-	        'data_to' => $this->items->lastItem()
-	    ];
-
-
-	    return view('joesama/vuegrid::datagrid',compact('data'));
-	}
-
-
-
-} // END class VueDatagrid 
+        return view('joesama/vuegrid::datagrid', compact('data'));
+    }
+} // END class VueDatagrid

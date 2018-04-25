@@ -1,4 +1,5 @@
 <?php
+
 namespace Joesama\VueGrid;
 
 use Illuminate\Foundation\AliasLoader;
@@ -7,7 +8,6 @@ use Joesama\VueGrid\Services\Grid;
 
 class VueGridProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap services.
      *
@@ -23,18 +23,15 @@ class VueGridProvider extends ServiceProvider
             $path.'/resources/views' => resource_path('views/joesama/vuegrid'),
         ]);
 
-
         $this->loadTranslationsFrom($path.'/resources/lang', 'joesama/vuegrid');
 
         $this->publishes([
             $path.'/resources/lang' => resource_path('lang/joesama/vuegrid'),
         ]);
 
-
         $this->publishes([
             $path.'/resources/config/vuegrid.php' => config_path('vuegrid.php'),
         ]);
-
 
         $this->publishes([
             $path.'/resources/public' => public_path('packages/joesama/vuegrid'),
@@ -48,8 +45,6 @@ class VueGridProvider extends ServiceProvider
         } else {
             class_alias(Services\Grid::class, 'VueGrid');
         }
-
-
     }
 
     /**
@@ -59,9 +54,8 @@ class VueGridProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->app->singleton('VueGrid', function ($app) {
-            return new Grid;
+            return new Grid();
         });
     }
 
@@ -74,5 +68,4 @@ class VueGridProvider extends ServiceProvider
     {
         return ['VueGrid'];
     }
-
 }
