@@ -211,6 +211,6 @@ class Grid
             'data_to'           => $this->items->lastItem(),
         ];
 
-        return view('joesama/vuegrid::datagrid', compact('data'));
+        return view('joesama/vuegrid::list', compact('data'));
     }
 } // END class VueDatagrid

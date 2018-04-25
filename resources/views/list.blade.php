@@ -2,12 +2,12 @@
   <link rel="stylesheet" href="{{ asset('packages/joesama/vuegrid/css/bootstrap.min.css') }}"/>
 @endpush
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-md-auto">
+    <div class="col-md-12">
 		<div class="panel panel-default">
 		  <div class="panel-body">
-		  	@include('joesama/vuegrid::datagrid');
+		  	@include('joesama/vuegrid::datagrid')
 		  </div>
 		</div>
     </div>
