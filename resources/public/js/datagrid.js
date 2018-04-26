@@ -2,6 +2,7 @@ Vue.component('demo-grid', {
   template: '#grid-template',
   replace: true,
   props: {
+    title: String,
     data: Array,
     columns: Array,
     actions: Array,
@@ -200,21 +201,21 @@ Vue.component('demo-grid', {
 
       if(set.delete){
         swal({
-              title: window.swalert.confirm.title,
-              text: window.swalert.confirm.text,
+              title: app.swalert.confirm.title,
+              text: app.swalert.confirm.text,
               type: 'warning',
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
-              confirmButtonText: window.swalert.confirm.proceed,
-              cancelButtonText: window.swalert.cancel.title,
+              confirmButtonText: app.swalert.confirm.proceed,
+              cancelButtonText: app.swalert.cancel.title,
             }).then(function() {
               location.href = path;
         }, function (dismiss) {
-          if (dismiss === 'cancel') {
+          if (dismiss === swal.DismissReason.cancel) {
             swal(
-              window.swalert.cancel.title,
-              window.swalert.cancel.text,
+              app.swalert.cancel.title,
+              app.swalert.cancel.text,
               'error'
             )
           }
@@ -234,23 +235,24 @@ var vuegrid = new Vue({
   data: {
     timer:'',
     searchQuery: '',
-    search: window.search,
-    filter: window.autoFilter,
-    gridColumns: window.column,
-    gridData: window.data,
-    gridBuilder: window.builder,
-    gridApi: window.api,
-    gridNew: window.add,
-    gridNewDesc: window.addDesc,
-    gridActions: window.actions,
-    gridActionsSimple: window.simple,
+    title: app.title,
+    search: app.search,
+    filter: app.autoFilter,
+    gridColumns: app.column,
+    gridData: app.data,
+    gridBuilder: app.builder,
+    gridApi: app.api,
+    gridNew: app.add,
+    gridNewDesc: app.addDesc,
+    gridActions: app.actions,
+    gridActionsSimple: app.simple,
     pagination: {
-      total: window.pagination.total,
-      per_page: window.pagination.per_page,
-      from: window.pagination.from,
-      to: window.pagination.last_page,
-      last_page: window.pagination.last_page,
-      current_page: window.pagination.current_page
+      total: app.data_total,
+      per_page: app.data_per_page,
+      from: app.data_from,
+      to: app.data_to,
+      last_page: app.data_last_page,
+      current_page: app.data_current_page
     },
     offset: 4,
   },

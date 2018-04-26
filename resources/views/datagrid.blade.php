@@ -5,11 +5,15 @@
         <form class="form" id="search">
           <div class="row">
             <div class="col-sm-6">
-              <div class="input-group">
-                <input type="text" class="form-control col-sm-8 input-sm" name="search" v-model="searchQuery" placeholder="{{ trans('joesama/vuegrid::datagrid.search') }}" >
-                <span class="input-group-btn">
-                  <button class="btn btn-sm btn-primary" type="button" @click.prevent="fetchItems(1)">
-                  <i class="fa fa-search" aria-hidden="true"></i>&nbsp;
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupPrepend">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </div>
+                <input type="text" class="form-control col-sm-8 form-control-sm" name="search" v-model="searchQuery" placeholder="{{ trans('joesama/vuegrid::datagrid.search') }}" >
+                <span class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" @click.prevent="fetchItems(1)">
                   {{ trans('joesama/vuegrid::datagrid.search') }}
                   </button>
                 </span>
@@ -29,11 +33,11 @@
         </form>
       </div>
     </div>
-    <div class="clearfix">&nbsp;</div>
     <div class="row">
         <div class="col-md-12">
           <demo-grid
             :data="gridData"
+            :title="title"
             :actions = "gridActions"
             :simple = "gridActionsSimple"
             :columns="gridColumns"
@@ -43,55 +47,61 @@
           </demo-grid>
         </div>
     </div>
+
     <div class="row">
-      <div class="col-md-2 text-left">
-      <ul class="pagination pagination-sm">
-        <li>
-         <small>
-          <strong>{{ trans('joesama/vuegrid::datagrid.total') }}</strong>
-          &nbsp;:&nbsp;@{{ pagination.total }}
-          </small>
-        </li>
-      </ul>
-      </div>
-      <div class="col-md-5 col-md-offset-4 text-right">
-      <ul class="pagination pagination-sm">
-          <li v-if="pagination.current_page > 1">
-              <a href="#" aria-label="Previous"
-                 @click.prevent="changePage(pagination.current_page - 1)">
-                  <span aria-hidden="true">&laquo;</span>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2 text-left">
+          <ul class="pagination pagination-sm">
+            <li>
+             <small>
+              <strong>{{ trans('joesama/vuegrid::datagrid.total') }}</strong>
+              &nbsp;:&nbsp;@{{ pagination.total }}
+              </small>
+            </li>
+          </ul>
+          </div>
+          <div class="col-md-8">
+          <ul class="pagination pagination-sm justify-content-center">
+              <li class="page-item" v-if="pagination.current_page > 1">
+                  <a class="page-link" href="#" aria-label="Previous"
+                     @click.prevent="changePage(pagination.current_page - 1)">
+                      <span ria-hidden="true">&laquo;</span>
+                  </a>
+              </li>
+              <li v-for="page in pagesNumber"
+                  v-bind:class="[ page == isActived ? 'page-item active' : '']">
+                  <a class="page-link" href="#"
+                     @click.prevent="changePage(page)">@{{ page }}</a>
+              </li>
+              <li class="page-item"  v-if="pagination.current_page < pagination.last_page">
+                  <a class="page-link" href="#" aria-label="Next"
+                     @click.prevent="changePage(pagination.current_page + 1)">
+                      <span aria-hidden="true">&raquo;</span>
+                  </a>
+              </li>
+          </ul>
+          </div>
+          <div class="col-md-2 text-right">
+            <div class="btn-group" role="group" aria-label="...">
+              <a  class="btn btn-sm btn-default">
+              <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
               </a>
-          </li>
-          <li v-for="page in pagesNumber"
-              v-bind:class="[ page == isActived ? 'active' : '']">
-              <a href="#"
-                 @click.prevent="changePage(page)">@{{ page }}</a>
-          </li>
-          <li v-if="pagination.current_page < pagination.last_page">
-              <a href="#" aria-label="Next"
-                 @click.prevent="changePage(pagination.current_page + 1)">
-                  <span aria-hidden="true">&raquo;</span>
+              <a class="btn btn-sm btn-default">
+              <i class="fa fa-file-excel-o" aria-hidden="true"></i>
               </a>
-          </li>
-      </ul>
-      </div>
-      <div class="col-md-1 text-right">
-        <div class="btn-group" role="group" aria-label="...">
-          <a  class="btn btn-sm btn-default">
-          <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-          </a>
-          <a class="btn btn-sm btn-default">
-          <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-          </a>
+            </div>
+          </div>
         </div>
       </div>
-      
     </div>
   </div>
 </div>
 
 <script type="text/x-template" id="grid-template">
+<div class="table-responsive-md">
   <table  id="datagrid" class="table table-bordered table-condensed table-striped table-hover table-sm">
+    <caption class="text-primary">@{{title}}</caption>
     <thead class="thead-dark">
       <tr>
         <th class="text-center" width="20px">#</th>
@@ -110,7 +120,8 @@
         <td :colspan="columns.length + 2"><p><center>{{ trans('joesama/vuegrid::datagrid.empty') }}</center></p></td>
       </tr>
       <tr v-for="(entry, index) in filteredData">
-        <td class="text-center" style="background-color: #f9f9f9">@{{ runner + (index + 1 ) }}</td>
+
+        <td class="text-center bg-white text-dark" >@{{ runner + (index + 1 ) }}</td>
         <td v-for="key in columns" v-bind:class="[ key.style ? key.style : '']">
           <a v-if="key.file" class="btn btn-primary btn-xs" :href="createUri(entry,key)" target="_blank">
             <i class="fa fa-download" aria-hidden="true"></i>&nbsp;@{{ sanitizeUri(entry,key) }}
@@ -124,34 +135,38 @@
           <span v-if="!key.file && !key.uri && !key.route && !key.iconic">@{{ display(entry,key) }}</span>
           <span v-if="!key.file && !key.uri && !key.route">@{{ display(entry,key) }}</span>
         </td>
-        <td v-if="actions" class="text-center" style="background-color: #f9f9f9">
+        <td v-if="actions" class="text-center bg-white text-dark" >
+          <!-- START BUTTON IS NOT SIMPLE -->
           <div class="btn-group" v-if="(actions.length > 1) && !simple">
-            <button type="button" class="btn btn-xs  btn-default">{{ trans('joesama/vuegrid::datagrid.actions') }} </button>
-            <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-outline-primary btn-sm font-weight-light" data-toggle="button" aria-pressed="false" autocomplete="off">{{ trans('joesama/vuegrid::datagrid.actions') }} </button>
+            <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
               <li v-for="btn in actions">
               <a :href="uriaction(btn.url,entry[btn.key])">
-              <i v-bind:class="[ btn.icons ? 'fa ' + btn.icons : 'fa fa-pencil-square-o']" aria-hidden="true"></i>&nbsp;@{{ btn.action }} @{{ btn.delete }}
+              <i v-bind:class="btn.icons" aria-hidden="true"></i>&nbsp;@{{ btn.action }} @{{ btn.delete }}
               </a>
               </li>
             </ul>
           </div>
-
-          <a v-if="(actions.length < 2) && !simple" :href="uriaction(btn.url,entry[btn.key])" v-for="btn in actions" class="btn btn-xs btn-actions">
-          <i v-bind:class="[ btn.icons ? 'fa ' + btn.icons : 'fa fa-pencil-square-o']" aria-hidden="true"></i>&nbsp;
+          <a v-if="(actions.length < 2) && !simple" :href="uriaction(btn.url,entry[btn.key])" v-for="btn in actions" class="btn btn-sm btn-actions">
+          <i v-bind:class="btn.icons" aria-hidden="true"></i>&nbsp;
           @{{ btn.action }}
           </a>
-          <div  v-if="simple" class="btn-group btn-group-xs" role="group" aria-label="...">
-          <a :href="uriaction(btn.url,entry[btn.key])" :title="btn.action || btn.delete" v-for="btn in actions" v-bind:class="[ btn.delete ? 'btn btn-xs btn-danger' : 'btn btn-xs btn-default']" v-on:click.prevent="confimAction(btn,uriaction(btn.url,entry[btn.key]))>
-          <i v-bind:class="[ btn.icons ? 'fa ' + btn.icons : 'fa fa-pencil-square-o']" aria-hidden="true"></i>
-          </a>
+          <!-- END BUTTON IS NOT SIMPLE -->
+
+          <!-- START BUTTON IS SIMPLE -->
+          <div  v-if="simple" class="btn-group btn-group-sm" role="group" aria-label="...">
+            <a :href="uriaction(btn.url,entry[btn.key])" :title="btn.action || btn.delete" v-for="btn in actions" v-bind:class="[ btn.delete ? 'btn btn-sm btn-outline-danger' : 'btn btn-outline-primary btn-sm']" v-on:click.prevent="confimAction(btn,uriaction(btn.url,entry[btn.key]))">
+            <i v-bind:class="btn.icons" aria-hidden="true"></i>
+            </a>
           </div>
+          <!-- END BUTTON IS SIMPLE -->
         </td>
       </tr>
     </tbody>
   </table>
-  
+</div>
 </script>
 

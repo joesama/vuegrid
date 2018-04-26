@@ -12,6 +12,7 @@ return [
             'title'   => 'Anda Pasti ?',
             'text'    => 'Maklumat yang dipadam tidak dapat dikembalikan!',
             'proceed' => 'Ya, padamkannya!',
+            'failed' => 'Terdapat Masalah Semasa Proses',
         ],
         'cancel' => [
             'title' => 'Batal',

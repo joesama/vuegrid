@@ -4,6 +4,7 @@ namespace Joesama\VueGrid\Services;
 
 use Illuminate\Database\Eloquent\Builder;
 use Joesama\VueGrid\Traits\DataModeller;
+use Joesama\VueGrid\Traits\GridAction;
 
 /**
  * Services to generate datagrid using vue.js.
@@ -12,7 +13,12 @@ use Joesama\VueGrid\Traits\DataModeller;
  **/
 class Grid
 {
-    use DataModeller;
+    use DataModeller,GridAction;
+
+    /**
+     * Table Title.
+     */
+    protected $title;
 
     /**
      * Columns To Be Previews.
@@ -67,6 +73,17 @@ class Grid
     public $styleRow;
 
     /**
+     * Set Table Title.
+     *
+     * @param string $title
+     *
+     **/
+    public function setTitle($title)
+    {
+        $this->title = strtoupper($title);
+    }
+
+    /**
      * Generate Columns For Table.
      *
      * @param array $columns
@@ -74,6 +91,11 @@ class Grid
      **/
     public function setColumns(array $columns)
     {
+
+    	if(empty($columns)):
+    		throw new \Exception("Please Define Fields Want To Be Display", 404);
+    	endif;
+
         $this->columns = $columns;
     }
 
@@ -106,9 +128,10 @@ class Grid
      *
      * @param array $actions
      **/
-    public function action($actions, $simple = false)
+    public function action($actions, $simple = TRUE)
     {
-        $this->actions = $actions;
+
+        $this->actions = $this->checkingActions($actions);
         $this->simple = $simple;
     }
 
@@ -187,6 +210,7 @@ class Grid
                     'title'   => trans('joesama/vuegrid::datagrid.delete.confirm.title'),
                     'text'    => trans('joesama/vuegrid::datagrid.delete.confirm.text'),
                     'proceed' => trans('joesama/vuegrid::datagrid.delete.confirm.proceed'),
+                    'failed' => trans('joesama/vuegrid::datagrid.delete.confirm.failed'),
                 ],
                 'cancel' => [
                     'title' => trans('joesama/vuegrid::datagrid.delete.cancel.title'),
@@ -194,6 +218,7 @@ class Grid
                 ],
             ],
             'autoFilter'        => $this->autoFilter,
+            'title'        		=> $this->title,
             'search'            => $this->search,
             'column'            => $this->columns,
             'api'               => $this->api,
@@ -202,7 +227,7 @@ class Grid
             'actions'           => $this->actions,
             'simple'            => $this->simple,
             'rowCss'            => $this->styleRow,
-               'data'           => $this->items->items(),
+            'data'              => $this->items->items(),
             'data_total'        => $this->items->total(),
             'data_per_page'     => $this->items->perPage(),
             'data_current_page' => $this->items->currentPage(),
