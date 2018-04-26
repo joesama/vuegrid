@@ -9,10 +9,10 @@ return [
     'actions' => 'Tindakan',
     'delete'  => [
         'confirm' => [
-            'title'   => 'Anda Pasti ?',
-            'text'    => 'Maklumat yang dipadam tidak dapat dikembalikan!',
-            'proceed' => 'Ya, padamkannya!',
-            'failed'  => 'Terdapat Masalah Semasa Proses',
+            'title'    => 'Anda Pasti ?',
+            'text'     => 'Maklumat yang dipadam tidak dapat dikembalikan!',
+            'proceed'  => 'Ya, padamkannya!',
+            'failed'   => 'Terdapat Masalah Semasa Proses',
             'success'  => 'Maklumat Berjaya Dipadam',
         ],
         'cancel' => [

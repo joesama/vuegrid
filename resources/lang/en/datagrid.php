@@ -9,10 +9,10 @@ return [
     'actions' => 'Actions',
     'delete'  => [
         'confirm' => [
-            'title'   => 'Are you sure?',
-            'text'    => "You won't be able to revert this!",
-            'proceed' => 'Yes, delete it!',
-            'failed'  => 'An Error Has Persisted',
+            'title'    => 'Are you sure?',
+            'text'     => "You won't be able to revert this!",
+            'proceed'  => 'Yes, delete it!',
+            'failed'   => 'An Error Has Persisted',
             'success'  => 'Data Successfully Deleted',
         ],
         'cancel' => [
