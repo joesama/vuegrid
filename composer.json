@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "laracasts/utilities": "^3.0"
+
     },
     "autoload": {
         "psr-4": {
@@ -26,10 +26,9 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Laracasts\\Utilities\\JavaScript\\JavaScriptServiceProvider"
+
             ],
             "aliases": {
-                "JavaScript": "Laracasts\\Utilities\\JavaScript\\JavaScriptFacade"
             }
         }
     },
