@@ -200,26 +200,30 @@ Vue.component('demo-grid', {
       var self = this;
 
       if(set.delete){
-        swal({
-              title: app.swalert.confirm.title,
-              text: app.swalert.confirm.text,
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: app.swalert.confirm.proceed,
-              cancelButtonText: app.swalert.cancel.title,
-            }).then(function() {
-              location.href = path;
-        }, function (dismiss) {
-          if (dismiss === swal.DismissReason.cancel) {
-            swal(
-              app.swalert.cancel.title,
-              app.swalert.cancel.text,
-              'error'
-            )
+        
+        swal.queue([{
+          title: app.swalert.confirm.title,
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: app.swalert.confirm.proceed,
+          cancelButtonText: app.swalert.cancel.title,
+          reverseButtons: true,
+          text:app.swalert.confirm.text,
+          showLoaderOnConfirm: true,
+          preConfirm: () => {
+            return fetch(path)
+              .then(response => response.json())
+              .then(data => swal.insertQueueStep(data.ip))
+              .catch(() => {
+                swal.insertQueueStep({
+                  type: 'error',
+                  title: app.swalert.confirm.failed
+                })
+              })
           }
-        });
+        }]);
       
       }else{
         location.href = path;
