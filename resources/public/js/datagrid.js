@@ -211,10 +211,28 @@ Vue.component('demo-grid', {
               confirmButtonText: app.swalert.confirm.proceed,
               cancelButtonText: app.swalert.cancel.title,
               reverseButtons: true,
-            }).then(function() {
-              location.href = path;
-          }, function (dismiss) {
-            if (dismiss === swal.DismissReason.cancel) {
+            }).then((result) => {
+            if (result.value) {
+                axios.get(path)
+                .then(function (response) {
+                  swal({
+                    type: 'success',
+                    text: app.swalert.confirm.success,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                })
+                .catch(function (error) {
+                  swal(
+                    'Oops...',
+                    app.swalert.confirm.failed,
+                    'error'
+                  )
+                });
+            } else if (
+              // Read more about handling dismissals
+              result.dismiss === swal.DismissReason.cancel
+            ) {
               swal(
                 app.swalert.cancel.title,
                 app.swalert.cancel.text,
@@ -295,17 +313,23 @@ var vuegrid = new Vue({
   methods: {
       fetchItems: function (page) {
           var data = {page: page};
-          this.$http.get(this.gridApi + '?page=' + page + '&search=' + this.searchQuery).then(function (response) {
-              //look into the routes file and format your response
-              this.gridData = response.data.data;
-              this.pagination.current_page = (response.data.current_page > response.data.last_page ) ? 1 : response.data.current_page;
+          axios.get(this.gridApi + '?page=' + page + '&search=' + this.searchQuery)
+            .then(function (response) {
 
-              this.pagination.total = response.data.total;
-              this.pagination.last_page = response.data.last_page;
-              this.pagination.to = response.data.last_page;
-              // this.$set('pagination', response.data.pagination);
-          }, function (error) {
-              // handle error
+            vuegrid.gridData = response.data.data;
+            vuegrid.pagination.current_page = (response.data.current_page > response.data.last_page ) ? 1 : response.data.current_page;
+
+            vuegrid.pagination.total = response.data.total;
+            vuegrid.pagination.last_page = response.data.last_page;
+            vuegrid.pagination.to = response.data.last_page;
+
+          }).catch(function (error) {
+            console.log(error);
+              swal(
+                'Oops...',
+                app.swalert.confirm.failed,
+                'error'
+              )
           });
       },
       changePage: function (page) {

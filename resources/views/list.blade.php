@@ -28,7 +28,6 @@
 <script src="{{ asset('packages/joesama/vuegrid/js/vuegrid.js') }}"></script>
 <script type="text/javascript" src="https://unpkg.com/sweetalert2@7.19.1/dist/sweetalert2.all.js"></script>
 <script src="{{ asset('packages/joesama/vuegrid/js/vue.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
 
 @if(config('vuegrid.env') != 'production')
 <script type="text/javascript">

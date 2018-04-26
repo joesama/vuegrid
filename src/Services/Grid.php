@@ -209,6 +209,7 @@ class Grid
                     'text'    => trans('joesama/vuegrid::datagrid.delete.confirm.text'),
                     'proceed' => trans('joesama/vuegrid::datagrid.delete.confirm.proceed'),
                     'failed'  => trans('joesama/vuegrid::datagrid.delete.confirm.failed'),
+                    'success'  => trans('joesama/vuegrid::datagrid.delete.confirm.success'),
                 ],
                 'cancel' => [
                     'title' => trans('joesama/vuegrid::datagrid.delete.cancel.title'),
