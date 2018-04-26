@@ -4,7 +4,7 @@
 <style type="text/css">
   #griddata caption {
     caption-side: top;
-    font-size: 20;
+    font-size: 20px;
     font-weight: 600;
   }
 </style>
