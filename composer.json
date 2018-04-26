@@ -26,9 +26,10 @@
     "extra": {
         "laravel": {
             "providers": [
-
+                "Joesama\\VueGrid\\VueGridProvider"
             ],
             "aliases": {
+                "VueGrid": "Joesama\\VueGrid\\Services\\Grid"
             }
         }
     },
