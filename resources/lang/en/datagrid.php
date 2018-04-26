@@ -12,7 +12,7 @@ return [
             'title'   => 'Are you sure?',
             'text'    => "You won't be able to revert this!",
             'proceed' => 'Yes, delete it!',
-            'failed' => 'An Error Has Persisted',
+            'failed'  => 'An Error Has Persisted',
         ],
         'cancel' => [
             'title' => 'Cancelled',

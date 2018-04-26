@@ -91,10 +91,9 @@ class Grid
      **/
     public function setColumns(array $columns)
     {
-
-    	if(empty($columns)):
-    		throw new \Exception("Please Define Fields Want To Be Display", 404);
-    	endif;
+        if (empty($columns)):
+            throw new \Exception('Please Define Fields Want To Be Display', 404);
+        endif;
 
         $this->columns = $columns;
     }
@@ -128,9 +127,8 @@ class Grid
      *
      * @param array $actions
      **/
-    public function action($actions, $simple = TRUE)
+    public function action($actions, $simple = true)
     {
-
         $this->actions = $this->checkingActions($actions);
         $this->simple = $simple;
     }
@@ -210,7 +208,7 @@ class Grid
                     'title'   => trans('joesama/vuegrid::datagrid.delete.confirm.title'),
                     'text'    => trans('joesama/vuegrid::datagrid.delete.confirm.text'),
                     'proceed' => trans('joesama/vuegrid::datagrid.delete.confirm.proceed'),
-                    'failed' => trans('joesama/vuegrid::datagrid.delete.confirm.failed'),
+                    'failed'  => trans('joesama/vuegrid::datagrid.delete.confirm.failed'),
                 ],
                 'cancel' => [
                     'title' => trans('joesama/vuegrid::datagrid.delete.cancel.title'),
@@ -218,7 +216,7 @@ class Grid
                 ],
             ],
             'autoFilter'        => $this->autoFilter,
-            'title'        		=> $this->title,
+            'title'        		   => $this->title,
             'search'            => $this->search,
             'column'            => $this->columns,
             'api'               => $this->api,
