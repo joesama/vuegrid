@@ -38,9 +38,8 @@ class VueGridProvider extends ServiceProvider
         ], 'public');
 
         $this->publishes([
-                $path.'/resources/config/vuegrid.php' => config_path('vuegrid.php')
+                $path.'/resources/config/vuegrid.php' => config_path('vuegrid.php'),
             ], 'config');
-
 
         if (class_exists('Illuminate\Foundation\AliasLoader')) {
             AliasLoader::getInstance()->alias(
