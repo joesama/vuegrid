@@ -33,10 +33,5 @@
             }
         }
     },
-    "scripts": {
-        "post-autoload-dump": [
-            "@php artisan vendor:publish --provider='Joesama\\VueGrid\\VueGridProvider'"
-        ]
-    },
     "minimum-stability": "dev"
 }
