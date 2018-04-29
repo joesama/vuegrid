@@ -1,17 +1,18 @@
-<div class="row">
+<div class="row  py-3 bg-white text-dark">
   <div class="col-md-12" id="griddata">
-    <div v-if="search" class="row">
+    <H2 v-if="title.length > 0" class="text-primary">@{{title}}</H2>
+    <div v-if="search" class="row my-2 bg-white text-dark">
       <div class="col-md-12">
         <form class="form" id="search">
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-10">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroupPrepend">
                     <i class="fas fa-search"></i>
                   </span>
                 </div>
-                <input type="text" class="form-control col-sm-8 form-control-sm" name="search" v-model="searchQuery" placeholder="{{ trans('joesama/vuegrid::datagrid.search') }}" >
+                <input type="text" class="form-control col-md-10 form-control-sm" name="search" v-model="searchQuery" placeholder="{{ trans('joesama/vuegrid::datagrid.search') }}" >
                 <span class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button" @click.prevent="fetchItems(1)">
                   {{ trans('joesama/vuegrid::datagrid.search') }}
@@ -19,7 +20,7 @@
                 </span>
               </div><!-- /input-group -->
             </div>
-            <div class="col-sm-2 col-sm-offset-4 text-right" v-if="gridNew">
+            <div class="col-md-2 text-right" v-if="gridNew">
               <a class="btn btn-sm btn-primary" :href="gridNew" v-if="gridNewDesc">
               <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
               @{{ gridNewDesc }}
@@ -33,6 +34,7 @@
         </form>
       </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
           <demo-grid
@@ -101,7 +103,6 @@
 <script type="text/x-template" id="grid-template">
 <div class="table-responsive-md">
   <table  id="datagrid" class="table table-bordered table-condensed table-striped table-hover table-sm">
-    <caption class="text-primary">@{{title}}</caption>
     <thead class="thead-dark">
       <tr>
         <th class="text-center" width="20px">#</th>
