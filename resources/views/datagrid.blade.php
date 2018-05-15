@@ -87,10 +87,10 @@
           <div class="col-md-2 text-right">
             <div class="btn-group" role="group" aria-label="...">
               <a  class="btn btn-sm btn-default">
-              <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+              <i class="fas fa-file-pdf" aria-hidden="true"></i>
               </a>
               <a class="btn btn-sm btn-default">
-              <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+              <i class="fas fa-file-excel" aria-hidden="true"></i>
               </a>
             </div>
           </div>
