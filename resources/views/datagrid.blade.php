@@ -134,7 +134,6 @@
               <i v-if="display(entry,key) == 0" class="fa fa-times fa-2x text-danger" aria-hidden="true"></i>
           </span>
           <span v-if="!key.file && !key.uri && !key.route && !key.iconic">@{{ display(entry,key) }}</span>
-          <span v-if="!key.file && !key.uri && !key.route">@{{ display(entry,key) }}</span>
         </td>
         <td v-if="actions" class="text-center bg-white text-dark" >
           <!-- START BUTTON IS NOT SIMPLE -->
