@@ -191,18 +191,18 @@ class Grid
     }
 
     /**
-     * Build And Generate Data grid Table.
+     * Generate Data Mapping.
      *
-     * @return void
+     * @return array
      **/
-    public function build()
+    protected function generate()
     {
         // @TODO IF Sources Is Collection / Builder Build Pagination
         // if(!is_null($this->items)):
-        // 	$items = $this->buildPaginators($this->items);
+        //  $items = $this->buildPaginators($this->items);
         // endif;
 
-        $data = [
+        return [
             'swalert' => [
                 'confirm' => [
                     'title'    => trans('joesama/vuegrid::datagrid.delete.confirm.title'),
@@ -217,7 +217,8 @@ class Grid
                 ],
             ],
             'autoFilter'        => $this->autoFilter,
-            'title'        		   => $this->title,
+            'title'             => $this->title,
+            'tableId'           => str_limit(studly_case($this->title), 25),
             'search'            => $this->search,
             'column'            => $this->columns,
             'api'               => $this->api,
@@ -226,15 +227,36 @@ class Grid
             'actions'           => $this->actions,
             'simple'            => $this->simple,
             'rowCss'            => $this->styleRow,
-            'data'              => $this->items->items(),
-            'data_total'        => $this->items->total(),
-            'data_per_page'     => $this->items->perPage(),
-            'data_current_page' => $this->items->currentPage(),
-            'data_last_page'    => $this->items->lastPage(),
-            'data_from'         => $this->items->firstItem(),
-            'data_to'           => $this->items->lastItem(),
+            'data'              => is_null($this->items) ? [] : $this->items->items(),
+            'data_total'        => is_null($this->items) ? 0 : $this->items->total(),
+            'data_per_page'     => is_null($this->items) ? 1 : $this->items->perPage(),
+            'data_current_page' => is_null($this->items) ? 1 : $this->items->currentPage(),
+            'data_last_page'    => is_null($this->items) ? 1 : $this->items->lastPage(),
+            'data_from'         => is_null($this->items) ? 1 : $this->items->firstItem(),
+            'data_to'           => is_null($this->items) ? 1 : $this->items->lastItem(),
         ];
 
-        return view('joesama/vuegrid::list', compact('data'));
+    }
+
+    /**
+     * Build An Grid Data Without HTML view.
+     *
+     * @return array
+     **/
+    public function build()
+    {
+        return $this->generate();
+    }
+
+    /**
+     * Render HTML Snippet.
+     *
+     * @return string | HTML
+     **/
+    public function render()
+    {
+        $data = $this->generate();
+
+        return view('joesama.vuegrid.list', compact('data'));
     }
 } // END class VueDatagrid
