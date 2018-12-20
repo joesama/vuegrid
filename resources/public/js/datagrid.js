@@ -1,5 +1,5 @@
-Vue.component('demo-grid', {
-  template: '#grid-template',
+Vue.component('vue-grid', {
+  template: '#tpl-' + app.tableId,
   replace: true,
   props: {
     title: String,
@@ -148,7 +148,7 @@ Vue.component('demo-grid', {
     createUri : function(data,key){
 
       var path = this.display(data,key);
-      return "{{ handles('threef/entree::/') }}" + path.replace('public','');
+      return "{{ handles('/') }}" + path.replace('public','');
 
     },
     route : function (path) {
@@ -251,7 +251,7 @@ var urlParam = new URL(window.location);
 var searchParam = new URLSearchParams(urlParam.search);
 searchParam.get("search");
 var vuegrid = new Vue({
-  el: '#griddata',
+  el: '#' + app.tableId,
   data: {
     timer:'',
     searchQuery: '',
