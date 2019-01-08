@@ -218,7 +218,7 @@ class Grid
             ],
             'autoFilter'        => $this->autoFilter,
             'title'             => $this->title,
-            'tableId'           => str_limit(studly_case($this->title), 25),
+            'tableId'           => str_limit(studly_case(preg_replace('/[^A-Za-z0-9\-]/', '',$this->title)), 25),
             'search'            => $this->search,
             'column'            => $this->columns,
             'api'               => $this->api,
