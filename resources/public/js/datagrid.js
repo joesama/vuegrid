@@ -50,9 +50,9 @@ Vue.component('vue-grid', {
                     var obj =  field.split('.');
 
                     if(obj.length == 3){
-                      display =  row[obj[0]][obj[1]][obj[2]];
+                      display =  (data[obj[0]][obj[1]] != null) ? data[obj[0]][obj[1]][obj[2]] : '';
                     }else{
-                      display =  row[obj[0]][obj[1]];
+                      display =  (data[obj[0]] != null) ? data[obj[0]][obj[1]] : '';
                     }
                   }
 
