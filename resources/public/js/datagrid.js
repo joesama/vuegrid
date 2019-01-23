@@ -215,6 +215,7 @@ Vue.component('vue-grid', {
             if (result.value) {
                 axios.get(path)
                 .then(function (response) {
+                  vuegrid.fetchItems();
                   swal({
                     type: 'success',
                     text: app.swalert.confirm.success,
