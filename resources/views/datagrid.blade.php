@@ -158,7 +158,7 @@
 
           <!-- START BUTTON IS SIMPLE -->
           <div  v-if="simple" class="btn-group btn-group-sm" role="group" aria-label="...">
-            <a :href="uriaction(btn.url,entry[btn.key])" :title="btn.action || btn.delete" v-for="btn in actions" v-bind:class="[ btn.delete ? 'btn btn-sm btn-outline-danger' : 'btn btn-outline-primary btn-sm']" v-on:click.prevent="confimAction(btn,uriaction(btn.url,entry[btn.key]))">
+            <a :href="uriaction(btn.url,entry[btn.key])" :title="btn.action || btn.delete" v-for="btn in actions" v-bind:class="[ btn.delete ? 'btn btn-sm btn-danger' : 'btn btn-outline-primary btn-sm']" v-on:click.prevent="confimAction(btn,uriaction(btn.url,entry[btn.key]))">
             <i v-bind:class="btn.icons" aria-hidden="true"></i>
             </a>
           </div>
