@@ -212,6 +212,8 @@ class Grid
         // if(!is_null($this->items)):
         //  $items = $this->buildPaginators($this->items);
         // endif;
+        // 
+        $title = str_limit(studly_case(preg_replace('/[^A-Za-z0-9\-]/', '',$this->title)), 25);
 
         return [
             'swalert' => [
@@ -229,7 +231,7 @@ class Grid
             ],
             'autoFilter'        => $this->autoFilter,
             'title'             => $this->title,
-            'tableId'           => str_limit(studly_case(preg_replace('/[^A-Za-z0-9\-]/', '',$this->title)), 25),
+            'tableId'           => $title,
             'search'            => $this->search,
             'column'            => $this->columns,
             'api'               => $this->api,
