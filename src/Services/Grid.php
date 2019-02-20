@@ -45,6 +45,7 @@ class Grid
      */
     protected $add = null;
     protected $addDesc = null;
+    protected $extraButtons = [];
 
     /**
      * Actions Button.
@@ -176,7 +177,17 @@ class Grid
     public function add($url, $urlDesc = null)
     {
         $this->add = $url;
-        $this->addDesc = $urlDesc;
+        $this->addDesc = $urlDesc ?? trans('joesama/vuegrid::datagrid.buttons.add');
+    }
+
+    /**
+     * Add action.
+     *
+     * @param string $url
+     **/
+    public function extraButton(array $buttons)
+    {
+        $this->extraButtons = $buttons;
     }
 
     /**
@@ -224,6 +235,7 @@ class Grid
             'api'               => $this->api,
             'add'               => $this->add,
             'addDesc'           => $this->addDesc,
+            'extraButtons'      => $this->extraButtons,
             'actions'           => $this->actions,
             'simple'            => $this->simple,
             'rowCss'            => $this->styleRow,

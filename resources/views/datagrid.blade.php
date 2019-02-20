@@ -5,7 +5,7 @@
       <div class="col-md-12">
         <form class="form" id="search">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-4">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroupPrepend">
@@ -20,14 +20,14 @@
                 </span>
               </div><!-- /input-group -->
             </div>
-            <div class="col-md-2 text-right" v-if="gridNew">
-              <a class="btn btn-sm btn-primary" :href="gridNew" v-if="gridNewDesc">
-              <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-              @{{ gridNewDesc }}
+            <div class="col-md-8 text-right" v-if="gridNew || gridExtraButtons.length > 0">
+              <a v-for="button in gridExtraButtons" class="btn btn-sm btn-primary" :href="button.uri">
+                <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                @{{ button.desc }}
               </a>
-              <a class="btn btn-sm btn-primary" :href="gridNew" v-else >
+              <a class="btn btn-sm btn-primary" :href="gridNew" >
               <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-              {{ trans('joesama/vuegrid::datagrid.buttons.add') }}
+                @{{ gridNewDesc }}
               </a>
             </div>
           </div>

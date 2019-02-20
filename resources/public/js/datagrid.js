@@ -265,6 +265,7 @@ var vuegrid = new Vue({
     gridApi: app.api,
     gridNew: app.add,
     gridNewDesc: app.addDesc,
+    gridExtraButtons: app.extraButtons,
     gridActions: app.actions,
     gridActionsSimple: app.simple,
     pagination: {
