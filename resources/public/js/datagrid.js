@@ -261,7 +261,6 @@ var vuegrid = new Vue({
     filter: app.autoFilter,
     gridColumns: app.column,
     gridData: app.data,
-    gridBuilder: app.builder,
     gridApi: app.api,
     gridNew: app.add,
     gridNewDesc: app.addDesc,
