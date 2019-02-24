@@ -3,6 +3,7 @@
 namespace Joesama\VueGrid\Services;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Joesama\VueGrid\Traits\DataModeller;
 use Joesama\VueGrid\Traits\GridAction;
 
@@ -213,7 +214,7 @@ class Grid
         //  $items = $this->buildPaginators($this->items);
         // endif;
         // 
-        $title = str_limit(studly_case(preg_replace('/[^A-Za-z0-9\-]/', '',$this->title)), 25);
+        $tableId = Str::limit(Str::studly(preg_replace('/[^A-Za-z0-9\-]/', '',$this->title)), 25,'');
 
         return [
             'swalert' => [
@@ -231,7 +232,7 @@ class Grid
             ],
             'autoFilter'        => $this->autoFilter,
             'title'             => $this->title,
-            'tableId'           => $title,
+            'tableId'           => $tableId,
             'search'            => $this->search,
             'column'            => $this->columns,
             'api'               => $this->api,
