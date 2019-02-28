@@ -215,6 +215,7 @@ Vue.component('vue-grid', {
             if (result.value) {
                 axios.get(path)
                 .then(function (response) {
+                  location.reload();
                   vuegrid.fetchItems();
                   swal({
                     type: 'success',
@@ -253,6 +254,7 @@ var searchParam = new URLSearchParams(urlParam.search);
 searchParam.get("search");
 var vuegrid = new Vue({
   el: '#' + app.tableId,
+  parent: vuegrid,
   data: {
     timer:'',
     searchQuery: '',
@@ -306,10 +308,10 @@ var vuegrid = new Vue({
     }
   },
   mounted: function () {
-    // this.fetchItems(this.pagination.current_page);
-    this.timer = setInterval(function () { 
-      this.fetchItems(this.pagination.current_page);
-      }.bind(this), 60000)
+    this.fetchItems(this.pagination.current_page);
+    // this.timer = setInterval(function () { 
+    //   this.fetchItems(this.pagination.current_page);
+    //   }.bind(this), 60000)
   },
   methods: {
       fetchItems: function (page) {
