@@ -179,7 +179,7 @@ class Grid
     public function add($url, $urlDesc = null)
     {
         $this->add = $url;
-        
+
         $this->addDesc = $urlDesc ?? trans('joesama/vuegrid::datagrid.buttons.add');
     }
 

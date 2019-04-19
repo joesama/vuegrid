@@ -27,7 +27,7 @@ trait GridAction
                 $act->put('icons', data_get($action, 'icons', 'fas fa-trash-alt'));
 
                 $act->put('url', data_get($action, 'url'));
-                
+
                 $act->put('key', data_get($action, 'key'));
             } else {
                 if (!in_array('icons', $keys)) {
