@@ -93,7 +93,7 @@ class Grid
      **/
     public function setColumns(array $columns)
     {
-        if (empty($columns)):
+        if (empty($columns)) :
             throw new \Exception('Please Define Fields Want To Be Display', 404);
         endif;
 
@@ -132,6 +132,7 @@ class Grid
     public function action($actions, $simple = true)
     {
         $this->actions = $this->checkingActions($actions);
+
         $this->simple = $simple;
     }
 
@@ -178,6 +179,7 @@ class Grid
     public function add($url, $urlDesc = null)
     {
         $this->add = $url;
+        
         $this->addDesc = $urlDesc ?? trans('joesama/vuegrid::datagrid.buttons.add');
     }
 
@@ -213,8 +215,8 @@ class Grid
         // if(!is_null($this->items)):
         //  $items = $this->buildPaginators($this->items);
         // endif;
-        // 
-        $tableId = Str::limit(Str::studly(preg_replace('/[^A-Za-z0-9\-]/', '',$this->title)), 25,'');
+        //
+        $tableId = Str::limit(Str::studly(preg_replace('/[^A-Za-z0-9\-]/', '', $this->title)), 25, '');
 
         return [
             'swalert' => [
@@ -250,7 +252,6 @@ class Grid
             'data_from'         => is_null($this->items) ? 1 : $this->items->firstItem(),
             'data_to'           => is_null($this->items) ? 1 : $this->items->lastItem(),
         ];
-
     }
 
     /**

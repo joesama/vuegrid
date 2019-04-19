@@ -26,7 +26,7 @@ class VueGridProvider extends ServiceProvider
         $this->loadTranslationsFrom($path.'/resources/lang', 'joesama/vuegrid');
 
         $this->publishes([
-            $path.'/resources/lang' => resource_path('lang/joesama/vuegrid'),
+            $path.'/resources/lang' => resource_path('lang/packages/joesama/vuegrid'),
         ]);
 
         $this->publishes([

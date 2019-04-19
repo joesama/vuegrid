@@ -169,10 +169,14 @@ Vue.component('vue-grid', {
       if (field.indexOf(".") >= 0){  
         var obj =  field.split('.');
 
-        if(obj.length == 3){
+        if (obj.length == 3) {
           display =  data[obj[0]][obj[1]][obj[2]];
-        }else{
-          display =  data[obj[0]][obj[1]];
+        } else {
+          if (data[obj[0]] == null) {
+            display =  ''
+          } else {
+            display =  data[obj[0]][obj[1]];
+          }
         }
       }
 
@@ -308,7 +312,7 @@ var vuegrid = new Vue({
     }
   },
   mounted: function () {
-    this.fetchItems(this.pagination.current_page);
+    // this.fetchItems(this.pagination.current_page);
     // this.timer = setInterval(function () { 
     //   this.fetchItems(this.pagination.current_page);
     //   }.bind(this), 60000)
